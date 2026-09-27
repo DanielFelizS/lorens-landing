@@ -1,0 +1,94 @@
+/* ===== Lorens Music Academy · tokens ===== */
+:root {
+  --caoba: #3A140E;       /* madera de caoba: secciones oscuras, texto fuerte */
+  --caoba-2: #52221A;     /* caoba iluminada */
+  --flamboyan: #E8462A;   /* acción, tecla pulsada */
+  --laton: #E3A93F;       /* latón: resaltes sobre caoba */
+  --marfil: #FFFDFA;      /* tecla blanca / fondo */
+  --arena: #F1E9E0;       /* superficies secundarias */
+  --tinta: #24120E;       /* texto principal */
+  --tinta-suave: #6B5550; /* texto secundario */
+  --mar: #11636B;         /* información, enlaces */
+  --linea: rgba(58, 20, 14, .14);
+
+  --display: "Big Shoulders Display", "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* escala tipográfica ~1.333 */
+  --t-xs: .8125rem;
+  --t-sm: .9375rem;
+  --t-md: 1.0625rem;
+  --t-lg: 1.375rem;
+  --t-xl: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+  --t-2xl: clamp(2.5rem, 1.4rem + 4.5vw, 4.75rem);
+  --t-hero: clamp(3.25rem, 1.2rem + 7.5vw, 7.5rem);
+
+  --wrap: 1200px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --radius-s: 6px;
+  --radius-l: 18px;
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  color-scheme: light;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(72px + env(safe-area-inset-top, 0px)); }
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+  margin: 0;
+  background: var(--marfil);
+  color: var(--tinta);
+  font-family: var(--body);
+  font-size: var(--t-md);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 800;
+  line-height: .95;
+  letter-spacing: -.005em;
+  margin: 0;
+  text-wrap: balance;
+}
+h2 { font-size: var(--t-2xl); text-transform: uppercase; }
+h3 { font-size: var(--t-lg); font-weight: 800; line-height: 1.1; }
+p { margin: 0; text-wrap: pretty; }
+
+.wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+.lead { font-size: var(--t-lg); line-height: 1.45; max-width: 36ch; }
+.muted { color: var(--tinta-suave); }
+
+/* botones */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 48px; padding: .75rem 1.4rem;
+  border-radius: 999px; border: 2px solid transparent;
+  font-weight: 600; font-size: var(--t-md); text-decoration: none; cursor: pointer;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.btn--laton { background: var(--laton); color: var(--caoba); }
+.btn--laton:hover { background: #F0BB57; }
+.btn--caoba { background: var(--caoba); color: var(--marfil); }
+.btn--caoba:hover { background: var(--caoba-2); }
+.btn--linea { border-color: currentColor; background: transparent; }
+.btn--linea:hover { background: rgba(255,255,255,.08); }
+
+:focus-visible { outline: 3px solid var(--mar); outline-offset: 3px; border-radius: 4px; }
+.oscuro :focus-visible { outline-color: var(--laton); }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

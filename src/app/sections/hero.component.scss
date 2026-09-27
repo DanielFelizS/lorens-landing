@@ -1,0 +1,120 @@
+:host { display: block; }
+
+.hero {
+  position: relative;
+  background:
+    radial-gradient(120% 70% at 85% 0%, rgba(227,169,63,.16), transparent 60%),
+    var(--caoba);
+  color: var(--marfil);
+  padding-top: clamp(6rem, 11vh, 8rem);
+  overflow: hidden;
+}
+
+/* vetas de caoba: líneas finas y cálidas que recuerdan la madera del piano */
+.hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background: repeating-linear-gradient(172deg, transparent 0 22px, rgba(255,255,255,.018) 22px 23px, transparent 23px 61px, rgba(0,0,0,.08) 61px 63px);
+}
+
+.hero__texto { position: relative; }
+
+h1 {
+  font-size: var(--t-hero);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: .86;
+  letter-spacing: -.01em;
+  display: flex; flex-direction: column;
+}
+.l1 { color: var(--marfil); }
+.l2 { color: var(--laton); padding-left: clamp(0rem, 8vw, 7rem); }
+
+.hero__pie {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto; align-items: end; gap: 2rem;
+  margin-top: clamp(1.75rem, 4vw, 3rem);
+}
+.lead { color: rgba(255,253,250,.86); }
+.hero__ctas { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: flex-end; }
+
+.lectura { position: relative; margin-top: clamp(1.5rem, 3vw, 2.5rem); min-height: 3.4em; display: flex; align-items: flex-end; padding-bottom: 1rem; }
+.lectura p { font-size: var(--t-md); max-width: 60ch; }
+.lectura strong { font-family: var(--display); font-size: 1.6rem; font-weight: 800; color: var(--laton); margin-right: .35rem; letter-spacing: .01em; }
+.muted-claro { color: rgba(255,253,250,.62); }
+
+/* ===== teclado ===== */
+.teclado {
+  --n: 21;
+  position: relative;
+  height: clamp(170px, 22vw, 270px);
+  border-top: 10px solid #1f0a07;
+  box-shadow: inset 0 14px 18px -12px rgba(0,0,0,.6);
+  background: #1f0a07;
+  user-select: none; -webkit-user-select: none; touch-action: manipulation;
+}
+.teclado__blancas { display: flex; height: 100%; gap: 2px; padding: 0 2px; }
+.tecla {
+  flex: 1 1 0; position: relative; border: 0; cursor: pointer;
+  background: linear-gradient(180deg, #efe8de 0%, var(--marfil) 18%, var(--marfil) 88%, #e7ddd1 100%);
+  border-radius: 0 0 7px 7px;
+  box-shadow: inset 0 -8px 0 #e2d6c8;
+  transition: transform .06s ease, background-color .06s ease;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 1.1rem;
+  animation: despierta 1.2s ease-out both;
+  animation-delay: calc(var(--i) * 45ms + 300ms);
+}
+.tecla:hover { background: linear-gradient(180deg, #efe8de 0%, #fff 18%); }
+.tecla.activa { transform: translateY(4px); background: var(--flamboyan); box-shadow: inset 0 -4px 0 #b8321b; }
+.tecla.activa .tecla__genero, .tecla.activa .tecla__pc { color: var(--marfil); }
+.tecla:focus-visible { outline: 3px solid var(--laton); outline-offset: -6px; }
+
+.tecla__genero {
+  font-family: var(--display); font-weight: 800; font-size: clamp(.95rem, 1.5vw, 1.35rem);
+  color: var(--caoba); writing-mode: vertical-rl; transform: rotate(180deg);
+  letter-spacing: .02em; margin-bottom: .6rem;
+}
+.tecla.con-genero::before {
+  content: ""; position: absolute; left: 50%; bottom: .55rem; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--flamboyan); transform: translateX(-50%);
+}
+.tecla.con-genero.activa::before { background: var(--marfil); }
+.tecla__pc { position: absolute; top: 58%; font-size: .72rem; font-weight: 600; color: rgba(58,20,14,.35); text-transform: uppercase; }
+
+.teclado__negras { position: absolute; inset: 0 2px auto; height: 60%; pointer-events: none; }
+.negra {
+  position: absolute; top: 0; height: 100%;
+  width: calc((100% / var(--n)) * .6);
+  left: calc((100% / var(--n)) * var(--pos) - (100% / var(--n)) * .3);
+  border: 0; border-radius: 0 0 5px 5px; cursor: pointer; pointer-events: auto;
+  background: linear-gradient(180deg, #2a1410, #120605 85%, #3a1f1a);
+  box-shadow: inset 0 -6px 0 #000, 0 3px 4px rgba(0,0,0,.45);
+  transition: transform .06s ease;
+}
+.negra.activa { transform: translateY(3px); background: var(--flamboyan); box-shadow: inset 0 -3px 0 #8f2211; }
+
+@keyframes despierta {
+  0% { background: var(--marfil); }
+  35% { background: var(--laton); }
+  100% { background: linear-gradient(180deg, #efe8de 0%, var(--marfil) 18%, var(--marfil) 88%, #e7ddd1 100%); }
+}
+
+@media (max-width: 860px) {
+  .hero__pie { grid-template-columns: 1fr; }
+  .hero__ctas { justify-content: flex-start; }
+  .pc { display: none; }
+  .tecla__pc { display: none; }
+}
+
+/* En pantallas pequeñas mostramos Sol 3 a Mi 5 (13 blancas) */
+@media (max-width: 720px) {
+  .teclado { --n: 13; height: 236px; }
+  .tecla__genero { font-size: .92rem; margin-bottom: .45rem; }
+  .teclado__negras { height: 52%; }
+  .solo-escritorio { display: none; }
+  /* 55 = Sol 3 es la blanca número 4 del rango completo: desplazamos las negras */
+  .negra { left: calc((100% / var(--n)) * (var(--pos) - 4) - (100% / var(--n)) * .3); }
+  .hero__ctas .btn { flex: 1 1 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tecla { animation: none; }
+}
